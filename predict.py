@@ -2,7 +2,7 @@ import os
 from typing import List
 
 import torch
-from diffusers import StableDiffusionPipeline, DDIMScheduler
+from diffusers import StableDiffusionPipeline
 from pytorch_lightning import seed_everything
 from cog import BasePredictor, Input, Path
 
@@ -16,9 +16,7 @@ class Predictor(BasePredictor):
         cache_dir = "waifu-diffusion-cache"
         self.pipe = StableDiffusionPipeline.from_pretrained(
             model_id,
-            # scheduler=scheduler,
-            revision="fp16",
-            torch_dtype=torch.float16,
+            torch_dtype=torch.float32,
             cache_dir=cache_dir,
             local_files_only=True,
         ).to("cuda")
@@ -27,7 +25,10 @@ class Predictor(BasePredictor):
     @torch.cuda.amp.autocast()
     def predict(
         self,
-        prompt: str = Input(description="Input prompt", default="touhou hakurei_reimu 1girl solo portrait"),
+        prompt: str = Input(
+            description="Input prompt",
+            default="touhou hakurei_reimu 1girl solo portrait",
+        ),
         width: int = Input(
             description="Width of output image. Maximum size is 1024x768 or 768x1024 because of memory limits",
             choices=[128, 256, 512, 768, 1024],
@@ -45,7 +46,7 @@ class Predictor(BasePredictor):
             description="Number of denoising steps", ge=1, le=500, default=50
         ),
         guidance_scale: float = Input(
-            description="Scale for classifier-free guidance", ge=1, le=20, default=7.5
+            description="Scale for classifier-free guidance", ge=1, le=20, default=6
         ),
         seed: int = Input(
             description="Random seed. Leave blank to randomize the seed", default=None
@@ -70,12 +71,23 @@ class Predictor(BasePredictor):
             height=height,
             num_inference_steps=num_inference_steps,
             guidance_scale=guidance_scale,
-            )
-        if any(output["nsfw_content_detected"]):
-            raise Exception("NSFW content detected, please try a different prompt")
+        )
+        samples = [
+            output["sample"][i]
+            for i, nsfw_flag in enumerate(output["nsfw_content_detected"])
+            if not nsfw_flag
+        ]
 
+        if len(samples) == 0:
+            raise Exception(
+                f"NSFW content detected. Try running it again, or try a different prompt."
+            )
+
+        print(
+            f"NSFW content detected in {num_outputs - len(samples)} outputs, showing the rest {len(samples)} images..."
+        )
         output_paths = []
-        for i, sample in enumerate(output["sample"]):
+        for i, sample in enumerate(samples):
             output_path = f"/tmp/out-{i}.png"
             sample.save(output_path)
             output_paths.append(Path(output_path))
