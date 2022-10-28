@@ -1,5 +1,6 @@
-# cog-waifu-diffusion
+# Themed Stable diffusion
 
-[![Replicate](https://replicate.com/cjwbw/waifu-diffusion/badge)](https://replicate.com/cjwbw/waifu-diffusion)
+[waifu-diffusion](https://huggingface.co/hakurei/waifu-diffusion): [![Replicate](https://replicate.com/cjwbw/waifu-diffusion/badge)](https://replicate.com/cjwbw/waifu-diffusion)
 
-A cog implementation of [waifu-diffusion](https://huggingface.co/hakurei/waifu-diffusion)
+[archer-diffusion](https://huggingface.co/nitrosocke/archer-diffusion): [![Replicate](https://replicate.com/cjwbw/archer-diffusion/badge)](https://replicate.com/cjwbw/archer-diffusion)
+
