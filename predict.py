@@ -12,11 +12,10 @@ class Predictor(BasePredictor):
         """Load the model into memory to make running multiple predictions efficient"""
         print("Loading pipeline...")
 
-        model_id = "hakurei/waifu-diffusion"
-        cache_dir = "waifu-diffusion-cache"
+        model_id = "nitrosocke/archer-diffusion"
+        cache_dir = "archer-diffusion-cache"
         self.pipe = StableDiffusionPipeline.from_pretrained(
             model_id,
-            torch_dtype=torch.float32,
             cache_dir=cache_dir,
             local_files_only=True,
         ).to("cuda")
@@ -27,7 +26,7 @@ class Predictor(BasePredictor):
         self,
         prompt: str = Input(
             description="Input prompt",
-            default="touhou hakurei_reimu 1girl solo portrait",
+            default="a magical princess with golden hair, archer style",
         ),
         width: int = Input(
             description="Width of output image. Maximum size is 1024x768 or 768x1024 because of memory limits",

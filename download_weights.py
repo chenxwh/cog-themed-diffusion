@@ -1,10 +1,11 @@
 import os
 import torch
+import sys
 from diffusers import StableDiffusionPipeline
 
 
-model_id = "hakurei/waifu-diffusion"
-cache_dir = "waifu-diffusion-cache"
+model_id = "nitrosocke/archer-diffusion"
+cache_dir = "archer-diffusion-cache"
 os.makedirs(cache_dir, exist_ok=True)
 
 
