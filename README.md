@@ -1,5 +1,4 @@
-# cog-waifu-diffusion
+# dreambooth-inference on Replicate
 
-[![Replicate](https://replicate.com/cjwbw/waifu-diffusion/badge)](https://replicate.com/cjwbw/waifu-diffusion)
+[![Replicate](https://replicate.com/cjwbw/dreambooth-inference/badge)](https://replicate.com/cjwbw/dreambooth-inference)
 
-A cog implementation of [waifu-diffusion](https://huggingface.co/hakurei/waifu-diffusion)
