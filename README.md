@@ -1,6 +1,23 @@
 # Themed Stable diffusion
 
-[waifu-diffusion](https://huggingface.co/hakurei/waifu-diffusion): [![Replicate](https://replicate.com/cjwbw/waifu-diffusion/badge)](https://replicate.com/cjwbw/waifu-diffusion)
+A template for implementing customised stable diffusion model in [Cog](https://github.com/replicate/cog), and pushing it to Replicate.
 
-[archer-diffusion](https://huggingface.co/nitrosocke/archer-diffusion): [![Replicate](https://replicate.com/cjwbw/archer-diffusion/badge)](https://replicate.com/cjwbw/archer-diffusion)
+
+First, download the weights (update the corresponding `model_id` of the model, which need to be available on HuggingFace):
+
+    cog run script/download-weights 
+
+Then, you can run predictions:
+
+    cog predict -i prompt=" "
+
+Or, push to a Replicate page:
+
+    cog push r8.im/...
+
+
+Examples: 
+[![Replicate](https://replicate.com/cjwbw/anything-v3.0/badge)](https://replicate.com/cjwbw/anything-v3.0)
+
+
 
