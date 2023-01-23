@@ -9,7 +9,7 @@ First, download the weights (update the corresponding `model_id` of the model, w
 
 Then, you can run predictions:
 
-    cog predict -i prompt=" "
+    cog predict -i prompt="..." -i image=@...
 
 Or, push to a Replicate page:
 
