@@ -26,6 +26,7 @@ class Predictor(BasePredictor):
             torch_dtype=torch.float16,
             cache_dir=MODEL_CACHE,
             local_files_only=True,
+            safety_checker=None,
         ).to("cuda")
 
     @torch.inference_mode()
@@ -33,7 +34,7 @@ class Predictor(BasePredictor):
         self,
         image: Path = Input(
             description="An image which will be repainted according to prompt",
-            ),
+        ),
         prompt: str = Input(
             description="Prompt to guide the image generation",
         ),
@@ -45,13 +46,21 @@ class Predictor(BasePredictor):
             description="Number of images to output", choices=[1, 4], default=1
         ),
         num_inference_steps: int = Input(
-            description="The number of denoising steps. More denoising steps usually lead to a higher quality image at the expense of slower inference.", ge=1, le=500, default=100
+            description="The number of denoising steps. More denoising steps usually lead to a higher quality image at the expense of slower inference.",
+            ge=1,
+            le=500,
+            default=100,
         ),
         guidance_scale: float = Input(
-            description="Scale for classifier-free guidance. Higher guidance scale encourages to generate images that are closely linked to the text prompt, usually at the expense of lower image quality.", ge=1, le=20, default=7.5
+            description="Scale for classifier-free guidance. Higher guidance scale encourages to generate images that are closely linked to the text prompt, usually at the expense of lower image quality.",
+            ge=1,
+            le=20,
+            default=7.5,
         ),
         image_guidance_scale: float = Input(
-            description="Image guidance scale is to push the generated image towards the inital image. Higher image guidance scale encourages to generate images that are closely linked to the source image, usually at the expense of lower image quality.", ge=1, default=1.5
+            description="Image guidance scale is to push the generated image towards the inital image. Higher image guidance scale encourages to generate images that are closely linked to the source image, usually at the expense of lower image quality.",
+            ge=1,
+            default=1.5,
         ),
         scheduler: str = Input(
             default="K_EULER_ANCESTRAL",
@@ -94,7 +103,6 @@ class Predictor(BasePredictor):
             image_guidance_scale=image_guidance_scale,
             generator=generator,
         )
-
 
         output_paths = []
 
