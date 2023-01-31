@@ -1,6 +1,10 @@
-# Themed Stable diffusion
+# # DistilGPT2 Stable Diffusion V2 
 
-A template for implementing customised stable diffusion model in [Cog](https://github.com/replicate/cog), and pushing it to Replicate.
+Replicate demo and API: 
+[![Replicate](https://replicate.com/cjwbw/distilgpt2-stable-diffusion-v2/badge)](https://replicate.com/cjwbw/distilgpt2-stable-diffusion-v2)
+
+
+A cog implementation for [distilgpt2-stable-diffusion-v2](FredZhang7/distilgpt2-stable-diffusion-v2) in [Cog](https://github.com/replicate/cog), and pushing it to Replicate.
 
 
 First, download the weights (update the corresponding `model_id` of the model, which need to be available on HuggingFace):
@@ -15,9 +19,6 @@ Or, push to a Replicate page:
 
     cog push r8.im/...
 
-
-Examples: 
-[![Replicate](https://replicate.com/cjwbw/anything-v3.0/badge)](https://replicate.com/cjwbw/anything-v3.0)
 
 
 

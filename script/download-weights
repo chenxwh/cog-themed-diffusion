@@ -3,21 +3,24 @@
 import os
 import shutil
 import torch
-from diffusers import StableDiffusionPipeline
+from transformers import GPT2Tokenizer, GPT2LMHeadModel
 
 
-model_id = "Linaqruf/anything-v3.0"
-MODEL_CACHE = "diffusers-cache"
+model_id = "FredZhang7/distilgpt2-stable-diffusion-v2"
+MODEL_CACHE = "model-cache"
 
 if os.path.exists(MODEL_CACHE):
     shutil.rmtree(MODEL_CACHE)
 os.makedirs(MODEL_CACHE, exist_ok=True)
 
 
-pipe = StableDiffusionPipeline.from_pretrained(
-    model_id, 
-    revision="diffusers", 
-    torch_dtype=torch.float16,   
-    cache_dir=MODEL_CACHE,
-)
+# tokenizer = GPT2Tokenizer.from_pretrained('distilgpt2')
 
+# pipe = StableDiffusionPipeline.from_pretrained(
+#     model_id, 
+#     torch_dtype=torch.float16,   
+#     cache_dir=MODEL_CACHE,
+# )
+
+tokenizer = GPT2Tokenizer.from_pretrained('distilgpt2', cache_dir=MODEL_CACHE)
+model = GPT2LMHeadModel.from_pretrained('FredZhang7/distilgpt2-stable-diffusion-v2', cache_dir=MODEL_CACHE)
