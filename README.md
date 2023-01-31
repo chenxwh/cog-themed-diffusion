@@ -1,4 +1,4 @@
-# # DistilGPT2 Stable Diffusion V2 
+## DistilGPT2 Stable Diffusion V2 
 
 Replicate demo and API: 
 [![Replicate](https://replicate.com/cjwbw/distilgpt2-stable-diffusion-v2/badge)](https://replicate.com/cjwbw/distilgpt2-stable-diffusion-v2)
