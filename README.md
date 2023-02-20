@@ -17,7 +17,4 @@ Or, push to a Replicate page:
 
 
 Examples: 
-[![Replicate](https://replicate.com/cjwbw/anything-v3.0/badge)](https://replicate.com/cjwbw/anything-v3.0)
-
-
-
+[![Replicate](https://replicate.com/cjwbw/pastel-mix/badge)](https://replicate.com/cjwbw/pastel-mix)
