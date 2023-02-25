@@ -3,18 +3,14 @@ from typing import List
 
 import torch
 from diffusers import (
-    StableDiffusionPipeline,
-    PNDMScheduler,
+    StableDiffusionPanoramaPipeline,
     LMSDiscreteScheduler,
     DDIMScheduler,
-    EulerDiscreteScheduler,
-    EulerAncestralDiscreteScheduler,
-    DPMSolverMultistepScheduler,
 )
 from cog import BasePredictor, Input, Path
 
 
-MODEL_ID = "andite/pastel-mix"
+MODEL_ID = "stabilityai/stable-diffusion-2-base"
 MODEL_CACHE = "diffusers-cache"
 
 
@@ -23,7 +19,7 @@ class Predictor(BasePredictor):
         """Load the model into memory to make running multiple predictions efficient"""
         print("Loading pipeline...")
 
-        self.pipe = StableDiffusionPipeline.from_pretrained(
+        self.pipe = StableDiffusionPanoramaPipeline.from_pretrained(
             MODEL_ID,
             torch_dtype=torch.float16,
             cache_dir=MODEL_CACHE,
@@ -33,19 +29,19 @@ class Predictor(BasePredictor):
     @torch.inference_mode()
     def predict(
         self,
-        prompt: str = Input(description="Input prompt", default=""),
+        prompt: str = Input(
+            description="Input prompt", default="a photo of the dolomites"
+        ),
         negative_prompt: str = Input(
             description="The prompt or prompts not to guide the image generation (what you do not want to see in the generation). Ignored when not using guidance.",
             default=None,
         ),
         width: int = Input(
-            description="Width of output image. Maximum size is 1024x768 or 768x1024 because of memory limits",
-            choices=[128, 256, 512, 768, 1024],
-            default=512,
+            description="Width of output image. Lower the setting if out of memory.",
+            default=4096,
         ),
         height: int = Input(
-            description="Height of output image. Maximum size is 1024x768 or 768x1024 because of memory limits",
-            choices=[128, 256, 512, 768, 1024],
+            description="Height of output image. Lower the setting if out of memory.",
             default=512,
         ),
         num_outputs: int = Input(
@@ -55,17 +51,13 @@ class Predictor(BasePredictor):
             description="Number of denoising steps", ge=1, le=500, default=50
         ),
         guidance_scale: float = Input(
-            description="Scale for classifier-free guidance", ge=1, le=20, default=12
+            description="Scale for classifier-free guidance", ge=1, le=20, default=7.5
         ),
         scheduler: str = Input(
-            default="DPMSolverMultistep",
+            default="DDIM",
             choices=[
                 "DDIM",
                 "K_EULER",
-                "DPMSolverMultistep",
-                "K_EULER_ANCESTRAL",
-                "PNDM",
-                "KLMS",
             ],
             description="Choose a scheduler.",
         ),
@@ -112,10 +104,6 @@ class Predictor(BasePredictor):
 
 def make_scheduler(name, config):
     return {
-        "PNDM": PNDMScheduler.from_config(config),
         "KLMS": LMSDiscreteScheduler.from_config(config),
         "DDIM": DDIMScheduler.from_config(config),
-        "K_EULER": EulerDiscreteScheduler.from_config(config),
-        "K_EULER_ANCESTRAL": EulerAncestralDiscreteScheduler.from_config(config),
-        "DPMSolverMultistep": DPMSolverMultistepScheduler.from_config(config),
     }[name]
