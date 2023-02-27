@@ -4,7 +4,7 @@ from typing import List
 import torch
 from diffusers import (
     StableDiffusionPanoramaPipeline,
-    LMSDiscreteScheduler,
+    EulerDiscreteScheduler,
     DDIMScheduler,
 )
 from cog import BasePredictor, Input, Path
@@ -104,6 +104,6 @@ class Predictor(BasePredictor):
 
 def make_scheduler(name, config):
     return {
-        "KLMS": LMSDiscreteScheduler.from_config(config),
+        "K_EULER": EulerDiscreteScheduler.from_config(config),
         "DDIM": DDIMScheduler.from_config(config),
     }[name]
