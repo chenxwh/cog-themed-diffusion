@@ -1,5 +1,7 @@
 # Themed Stable diffusion
 
+[![Replicate](https://replicate.com/cjwbw/supermarionation/badge)](https://replicate.com/cjwbw/supermarionation)
+
 A template for implementing customised stable diffusion model in [Cog](https://github.com/replicate/cog), and pushing it to Replicate.
 
 
@@ -14,7 +16,3 @@ Then, you can run predictions:
 Or, push to a Replicate page:
 
     cog push r8.im/...
-
-
-Examples: 
-[![Replicate](https://replicate.com/cjwbw/pastel-mix/badge)](https://replicate.com/cjwbw/pastel-mix)
